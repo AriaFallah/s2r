@@ -65,7 +65,7 @@ app.listen(1337, () => {
 function elastic(spices) {
   const client = new elasticsearch.Client({
     host: 'localhost:9200',
-    log: 'error',
+    log: 'trace',
   })
 
   const conditions = spices.map(spice => ({
@@ -81,6 +81,7 @@ function elastic(spices) {
         minimum_should_match: 1,
       },
     },
+    size: 12,
   }
 
   return client

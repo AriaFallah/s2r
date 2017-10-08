@@ -8,7 +8,7 @@ type Props = {
 }
 
 type State = {
-  opened: boolean
+  opened: boolean,
 }
 
 export default class Recipe extends Component<Props, State> {
@@ -16,7 +16,7 @@ export default class Recipe extends Component<Props, State> {
     super(props)
 
     this.state = {
-      opened: false
+      opened: false,
     }
   }
 

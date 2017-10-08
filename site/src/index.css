@@ -38,24 +38,12 @@ h6 {
 }
 
 #root {
-  height: 100%;
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-<<<<<<< HEAD
-main {
-  flex: 1 0 auto;
-  margin: 20px 0;
-}
-
-footer {
-  flex-shrink: 0;
-  padding: 20px;
-=======
 .ui.card:hover {
   cursor: pointer;
->>>>>>> rough modal implementation
 }

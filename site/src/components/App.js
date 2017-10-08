@@ -6,7 +6,7 @@ import RecipeContainer from './RecipeContainer'
 import { connect } from '../redux'
 
 type Props = {
-  query: ?string
+  query: ?string,
 }
 
 const Wrap = ({ children }) => children
@@ -26,7 +26,6 @@ class App extends Component<Props> {
           <div className="ui divider" />
           <RecipeContainer />
         </main>
-        <footer>Made By: Aria Fallah / Robert Adkins / Matt Callens</footer>
       </Wrap>
     )
   }
