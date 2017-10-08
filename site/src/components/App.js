@@ -17,10 +17,9 @@ class App extends Component<Props> {
       <Wrap>
         <main className="main">
           <header>
-            <h1>Search</h1>
-            {this.props.query && (
-              <h2>Your current query is {this.props.query}</h2>
-            )}
+            <h1 className="ui header">
+              SpicyTalk{this.props.query && `: ${this.props.query}`}
+            </h1>
           </header>
           <Recorder />
           <RecipeContainer recipes={[]} />

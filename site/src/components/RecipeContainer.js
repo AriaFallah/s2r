@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import Column from './Column'
 
 type Props = {
-  recipes: Array<Object>
+  recipes: Array<Object>,
 }
 
 export default class RecipeContainer extends Component<Props> {
@@ -27,7 +27,9 @@ export default class RecipeContainer extends Component<Props> {
         </div>
 
         <div className="column">
-          <Column designated={this.props.recipes.splice(0, this.props.recipes.length)} />
+          <Column
+            designated={this.props.recipes.splice(0, this.props.recipes.length)}
+          />
         </div>
       </div>
     )

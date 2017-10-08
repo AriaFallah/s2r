@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 
 type Props = {
-  data: Object
+  data: Object,
 }
 
 export default class Recipe extends Component<Props> {
@@ -11,10 +11,7 @@ export default class Recipe extends Component<Props> {
     return (
       <div className="ui card">
         <div className="image">
-          <img
-            src={this.props.data.mobile_image}
-            alt={this.props.data.id}
-          />
+          <img src={this.props.data.mobile_image} alt={this.props.data.id} />
         </div>
         <div className="content">
           <div className="header">{this.props.data.title}</div>

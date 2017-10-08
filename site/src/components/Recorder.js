@@ -73,6 +73,7 @@ class Recorder extends Component<Props, State> {
   }
 
   updateRecording = (blob: Blob) => {
+    console.log(window.URL.createObjectURL(blob))
     this.setState({ isLoading: true })
 
     fetch('http://localhost:1337/speech2text', {
@@ -80,23 +81,22 @@ class Recorder extends Component<Props, State> {
       body: blob,
     })
       .then(r => r.json())
-      .then(x => {
+      .then(r => {
         this.setState({ isLoading: false })
-        this.props.updateQuery(x)
+        this.props.updateQuery(r.spices.join(', '))
       })
   }
 
   render() {
     const { err, isLoading, isRecording } = this.state
     if (err) {
-      return <div>Could not record your request</div>
+      return <div>Something's Broken :'(</div>
     }
-
     return (
       <div>
         {!isRecording ? (
           <div>
-            <div>Press enter to start recording</div>
+            <div>Press enter to start searching</div>
             {isLoading && (
               <img
                 alt="cool loadering thing"
@@ -110,7 +110,7 @@ class Recorder extends Component<Props, State> {
           </div>
         ) : (
           <div>
-            <div>Press enter to stop recording</div>
+            <div>Press enter to stop searching</div>
             <img
               alt="cool loadering thing"
               src={rings}
@@ -125,7 +125,6 @@ class Recorder extends Component<Props, State> {
     )
   }
 }
-
 export default connect(
   Recorder,
   state => ({ query: state.query }),

@@ -40,19 +40,18 @@ app.post('/speech2text', async (req, res) => {
       res.status(400).json({ error: response })
       return
     }
-
     const translation = sikNLPBruh(
       response.results
         .map(r =>
-          r.alternatives
-            .filter(a => a.confidence >= 0.75)
-            .map(a => a.transcript)
-            .reduce((p, c) => p + c, ''),
+          r.alternatives.map(a => a.transcript).reduce((p, c) => p + c, ''),
         )
         .reduce((p, c) => p + c, ''),
     )
-    const recipes = await elastic(translation)
-    res.json({ 'spices': translation, 'recipes': recipes })
+
+    res.json({
+      spices: translation,
+      recipes: await elastic(translation),
+    })
   } catch (e) {
     console.log(e)
     res.status(500).send()
@@ -63,32 +62,40 @@ app.listen(1337, () => {
   console.log('Listening on 1337...')
 })
 
-async function elastic(spices) {
+function elastic(spices) {
   const client = new elasticsearch.Client({
     host: 'localhost:9200',
-    log: 'trace'
-  });
+    log: 'error',
+  })
+
   const conditions = spices.map(spice => ({
-    "match" : {
-      "ingredients.ingredientName" : spice
-    }
+    match: {
+      'ingredients.ingredientName': spice,
+    },
   }))
+
   const query = {
     query: {
-      bool : {
-	should : conditions,
-	minimum_should_match : 1,
-      }
-    }
+      bool: {
+        should: conditions,
+        minimum_should_match: 1,
+      },
+    },
   }
-  return client.search({
-    index: "recipes",
-    body: query,
-  }).then(body => body.hits.hits)
+
+  return client
+    .search({
+      index: 'recipe',
+      body: query,
+    })
+    .then(body => body.hits.hits)
 }
 
 function sikNLPBruh(input) {
-  const split = input.split('with')
+  let split = input.split('with')
+  if (split.length === 1) {
+    split = input.split(' ')
+  }
   if (split.length === 1) {
     return []
   }
