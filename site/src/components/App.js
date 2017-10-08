@@ -16,7 +16,7 @@ class App extends Component<Props> {
     return (
       <Wrap>
         <header>
-          <h1 className="ui header">SpicyTalk</h1>
+          <h1 className="ui header">Speech To Recipes</h1>
         </header>
         <main>
           <Recorder />
