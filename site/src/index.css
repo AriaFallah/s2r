@@ -7,25 +7,6 @@ body {
   font-family: 'Open Sans', sans-serif;
   margin: 0 auto;
   padding: 0;
-  width: 700px;
-}
-
-@media (min-width: 300px) {
-  body {
-    width: 100%;
-  }
-}
-
-@media (min-width: 700px) {
-  body {
-    width: 700px;
-  }
-}
-
-@media (min-width: 900px) {
-  body {
-    width: 850px;
-  }
 }
 
 h1,

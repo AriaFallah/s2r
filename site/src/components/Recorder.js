@@ -10,6 +10,7 @@ type Props = {
   query: ?string,
   updateData: *,
   updateQuery: *,
+  updateSpices: *,
 }
 
 type State = {
@@ -134,7 +135,7 @@ export default connect(
   state => ({ query: state.query }),
   dispatch => ({
     updateData: d => dispatch({ type: 'UPDATE_DATA', payload: d }),
-    updateSpices: s => dispatch({ type: 'UPDATE_SPICES', payload: s}),
+    updateSpices: s => dispatch({ type: 'UPDATE_SPICES', payload: s }),
     updateQuery: q => dispatch({ type: 'UPDATE_QUERY', payload: q }),
   }),
 )
