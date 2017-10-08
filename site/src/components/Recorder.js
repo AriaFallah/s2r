@@ -10,17 +10,17 @@ type State = {
   recorder: ?window.MediaRecorder,
 }
 
+const MIME_TYPE = 'audio/webm'
 function createRecorder(stream, cb) {
   let chunks = []
-  const recorder = new window.MediaRecorder(stream)
+  const recorder = new window.MediaRecorder(stream, { mimeType: MIME_TYPE })
 
   recorder.ondataavailable = e => {
     chunks.push(e.data)
   }
 
   recorder.onstop = e => {
-    const blob = new Blob(chunks, { type: 'audio/wav' })
-    cb(window.URL.createObjectURL(blob))
+    cb(new Blob(chunks, { type: MIME_TYPE }))
     chunks = []
   }
 
@@ -79,7 +79,14 @@ class Recorder extends Component<Props, State> {
     }
   }
 
-  updateRecording = (url: string) => this.setState({ lastRecording: url })
+  updateRecording = (blob: Blob) => {
+    fetch('http://localhost:1337/speech2text', {
+      method: 'POST',
+      body: blob,
+    })
+      .then(r => r.json())
+      .then(x => console.log(x))
+  }
 
   render() {
     const { err, isRecording, lastRecording } = this.state

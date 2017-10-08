@@ -11,5 +11,3 @@ if __name__ == '__main__':
         print(argv[1].split('with')[1].strip().replace(',', '').replace('and ', '').split(' '))
     except:
         print('[]')
-    
-        
