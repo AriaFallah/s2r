@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import elasticsearch from 'elasticsearch'
 import fetch from 'node-fetch'
-import express, { type $Request, type $Response } from 'express'
+import express from 'express'
 import morgan from 'morgan'
 
 const BLUEMIX = {
@@ -19,7 +19,7 @@ app.use(bodyParser.raw({ type: MIME_TYPE, limit: '10mb' }))
 app.use(cors())
 app.use(morgan('dev'))
 
-app.post('/speech2text', async (req: $Request, res: $Response) => {
+app.post('/speech2text', async (req, res) => {
   const webmFile = req.body
   const auth: string = Buffer.from(
     `${BLUEMIX.user}:${BLUEMIX.password}`,

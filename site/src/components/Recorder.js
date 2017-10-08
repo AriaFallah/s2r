@@ -1,32 +1,22 @@
 // @flow
 
 import React, { Component } from 'react'
+import { connect } from '../redux'
+import { createRecorder } from '../util'
 import grid from '../svg/grid.svg'
 import rings from '../svg/rings.svg'
 
-type Props = {}
+type Props = {
+  query: ?string,
+  updateData: *,
+  updateQuery: *,
+}
+
 type State = {
   err: boolean,
   isLoading: boolean,
   isRecording: boolean,
   recorder: ?window.MediaRecorder,
-}
-
-const MIME_TYPE = 'audio/webm'
-function createRecorder(stream, cb) {
-  let chunks = []
-  const recorder = new window.MediaRecorder(stream, { mimeType: MIME_TYPE })
-
-  recorder.ondataavailable = e => {
-    chunks.push(e.data)
-  }
-
-  recorder.onstop = e => {
-    cb(new Blob(chunks, { type: MIME_TYPE }))
-    chunks = []
-  }
-
-  return recorder
 }
 
 class Recorder extends Component<Props, State> {
@@ -92,7 +82,7 @@ class Recorder extends Component<Props, State> {
       .then(r => r.json())
       .then(x => {
         this.setState({ isLoading: false })
-        console.log(x)
+        this.props.updateQuery(x)
       })
   }
 
@@ -136,4 +126,11 @@ class Recorder extends Component<Props, State> {
   }
 }
 
-export default Recorder
+export default connect(
+  Recorder,
+  state => ({ query: state.query }),
+  dispatch => ({
+    updateData: d => dispatch({ type: 'UPDATE_DATA', payload: d }),
+    updateQuery: q => dispatch({ type: 'UPDATE_QUERY', payload: q }),
+  }),
+)
