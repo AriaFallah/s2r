@@ -4,12 +4,12 @@ import { createStore } from 'redux'
 import { connect as c } from 'react-redux'
 
 export type Action =
-  | { type: 'UPDATE_ERROR', payload: Boolean }
+  | { type: 'UPDATE_ERROR', payload: boolean }
   | { type: 'UPDATE_SPICES', payload: ?Array<string> }
   | { type: 'UPDATE_DATA', payload: ?Array<Object> }
 
 export type AppState = {
-  err: Boolean,
+  err: boolean,
   data: ?Array<Object>,
   spices: ?Array<string>,
 }
@@ -20,7 +20,6 @@ const startState: AppState = {
   err: false,
   data: null,
   spices: null,
-  query: null,
 }
 
 function rootReducer(state: AppState = startState, action: Action): AppState {

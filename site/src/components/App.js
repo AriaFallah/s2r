@@ -6,7 +6,7 @@ import Recipe from './Recipe'
 import { connect } from '../redux'
 
 type Props = {
-  err: Boolean,
+  err: boolean,
   query: ?string,
   recipes: Array<Object>,
 }
@@ -27,7 +27,9 @@ class App extends Component<Props> {
           </div>
         </header>
         <div className="ui divider" />
-	{err ? <div className="ui blue message">Please repeat your query.</div> : null}
+        {err ? (
+          <div className="ui blue message">Please repeat your query.</div>
+        ) : null}
         <main>
           <div className="ui four column grid">
             {recipes.map(r => (

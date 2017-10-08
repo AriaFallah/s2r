@@ -3,9 +3,8 @@
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import elasticsearch from 'elasticsearch'
-import express from 'express'
 import fetch from 'node-fetch'
-import helmet from 'helmet'
+import express from 'express'
 import morgan from 'morgan'
 
 const BLUEMIX = {
@@ -18,7 +17,6 @@ const MIME_TYPE = 'audio/webm'
 const app = express()
 app.use(bodyParser.raw({ type: MIME_TYPE, limit: '10mb' }))
 app.use(cors())
-app.use(helmet())
 app.use(morgan('dev'))
 
 app.post('/speech2text', async (req, res) => {
@@ -83,7 +81,7 @@ function elastic(spices) {
         minimum_should_match: 1,
       },
     },
-    size: 20,
+    size: 12,
   }
 
   return client
