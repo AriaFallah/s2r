@@ -1,7 +1,8 @@
-// @flow
+// @flowA
 
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import elasticsearch from 'elasticsearch'
 import fetch from 'node-fetch'
 import express, { type $Request, type $Response } from 'express'
 import morgan from 'morgan'
@@ -50,8 +51,8 @@ app.post('/speech2text', async (req: $Request, res: $Response) => {
         )
         .reduce((p, c) => p + c, ''),
     )
-
-    res.json({ translation })
+    const recipes = await elastic(translation)
+    res.json({ 'spices': translation, 'recipes': recipes })
   } catch (e) {
     console.log(e)
     res.status(500).send()
@@ -61,6 +62,33 @@ app.post('/speech2text', async (req: $Request, res: $Response) => {
 app.listen(1337, () => {
   console.log('Listening on 1337...')
 })
+
+async function elastic(spices) {
+  const client = new elasticsearch.Client({
+    host: 'localhost:9200',
+    log: 'trace'
+  });
+  const conditions = []
+  for (var spice of spices) {
+    conditions.push({
+      "match" : {
+	"ingredients.ingredientName" : spice
+      }
+    })
+  }
+  const query = {
+    query: {
+      bool : {
+	should : conditions,
+	minimum_should_match : 1,
+      }
+    }
+  }
+  return client.search({
+    index: "recipes",
+    body: query,
+  }).then(body => body.hits.hits)
+}
 
 function sikNLPBruh(input) {
   const split = input.split('with')
