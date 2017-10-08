@@ -50,7 +50,7 @@ app.post('/speech2text', async (req, res) => {
 
     res.json({
       spices: translation,
-      recipes: await elastic(translation),
+      recipes: translation.length == 0 ? [] : await elastic(translation),
     })
   } catch (e) {
     console.log(e)
@@ -63,10 +63,6 @@ app.listen(1337, () => {
 })
 
 function elastic(spices) {
-  if (spices == []) {
-    return []
-  }
-  
   const client = new elasticsearch.Client({
     host: 'localhost:9200',
     log: 'trace',
