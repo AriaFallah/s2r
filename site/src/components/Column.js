@@ -11,7 +11,7 @@ export default class Column extends Component<Props> {
   render() {
     return (
       <div className="ui cards">
-        {this.props.designated.map(r => <Recipe data={r} />)}
+        {this.props.designated.map(r => <Recipe key={r._id} data={r} />)}
       </div>
     )
   }

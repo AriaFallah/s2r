@@ -4,11 +4,11 @@ import { createStore } from 'redux'
 import { connect as c } from 'react-redux'
 
 export type Action =
-  | { type: 'UPDATE_QUERY', payload: string }
-  | { type: 'UPDATE_DATA', payload: Object }
+  | { type: 'UPDATE_QUERY', payload: ?string }
+  | { type: 'UPDATE_DATA', payload: ?Array<Object> }
 
 export type AppState = {
-  data: ?Object,
+  data: ?Array<Object>,
   query: ?string,
 }
 
@@ -31,7 +31,10 @@ function rootReducer(state: AppState = startState, action: Action): AppState {
   }
 }
 
-export const store = createStore(rootReducer)
+export const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+)
 export function connect<
   Props,
   SP: $Shape<Props>,

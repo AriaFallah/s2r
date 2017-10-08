@@ -64,6 +64,7 @@ class Recorder extends Component<Props, State> {
     if (e.keyCode === 13) {
       if (!isRecording) {
         recorder.start()
+        this.props.updateQuery(null)
         this.setState({ isRecording: true })
       } else {
         recorder.stop()
@@ -82,8 +83,10 @@ class Recorder extends Component<Props, State> {
     })
       .then(r => r.json())
       .then(r => {
+        const { recipes, spices } = r
         this.setState({ isLoading: false })
-        this.props.updateQuery(r.spices.join(', '))
+        this.props.updateData(recipes)
+        this.props.updateQuery(spices.join(', '))
       })
   }
 

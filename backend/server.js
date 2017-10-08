@@ -92,10 +92,7 @@ function elastic(spices) {
 }
 
 function sikNLPBruh(input) {
-  let split = input.split('with')
-  if (split.length === 1) {
-    split = input.split(' ')
-  }
+  const split = input.split('with')
   if (split.length === 1) {
     return []
   }

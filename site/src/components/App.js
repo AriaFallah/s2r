@@ -15,14 +15,16 @@ class App extends Component<Props> {
   render() {
     return (
       <Wrap>
-        <main className="main">
-          <header>
-            <h1 className="ui header">
-              SpicyTalk{this.props.query && `: ${this.props.query}`}
-            </h1>
-          </header>
+        <header>
+          <h1 className="ui header">SpicyTalk</h1>
+        </header>
+        <main>
           <Recorder />
-          <RecipeContainer recipes={[]} />
+          {this.props.query != null && (
+            <span>Current Query: {this.props.query}</span>
+          )}
+          <div className="ui divider" />
+          <RecipeContainer />
         </main>
         <footer>Made By: Aria Fallah / Robert Adkins / Matt Callens</footer>
       </Wrap>
