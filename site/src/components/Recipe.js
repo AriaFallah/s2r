@@ -45,7 +45,7 @@ class Recipe extends Component<Props, State> {
  		return ing.includes(' ' + spice) || ing.includes(spice + ' ') || ing === spice
 	      }
 	    )
-	  ).reduce((p, c) => p.concat(c), []).join(', ')
+	  ).reduce((p, c) => p.concat(c), []).join(', ').replace(/&reg/g, '®')
 	}
         </span>
         </div>
