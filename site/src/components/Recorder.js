@@ -1,12 +1,14 @@
 // @flow
 
 import React, { Component } from 'react'
+import grid from '../svg/grid.svg'
+import rings from '../svg/rings.svg'
 
 type Props = {}
 type State = {
   err: boolean,
+  isLoading: boolean,
   isRecording: boolean,
-  lastRecording: ?string,
   recorder: ?window.MediaRecorder,
 }
 
@@ -31,6 +33,7 @@ class Recorder extends Component<Props, State> {
   listener = null
   state = {
     err: false,
+    isLoading: false,
     isRecording: false,
     lastRecording: null,
     recorder: null,
@@ -80,16 +83,18 @@ class Recorder extends Component<Props, State> {
   }
 
   updateRecording = (blob: Blob) => {
+    this.setState({ isLoading: true })
+
     fetch('http://localhost:1337/speech2text', {
       method: 'POST',
       body: blob,
     })
       .then(r => r.json())
-      .then(x => console.log(x))
+      .then(() => this.setState({ isLoading: false }))
   }
 
   render() {
-    const { err, isRecording, lastRecording } = this.state
+    const { err, isLoading, isRecording } = this.state
     if (err) {
       return <div>Could not record your request</div>
     }
@@ -97,11 +102,32 @@ class Recorder extends Component<Props, State> {
     return (
       <div>
         {!isRecording ? (
-          <div>Press enter to start recording</div>
+          <div>
+            <div>Press enter to start recording</div>
+            {isLoading && (
+              <img
+                alt="cool loadering thing"
+                src={grid}
+                style={{
+                  display: 'block',
+                  margin: '20px auto',
+                }}
+              />
+            )}
+          </div>
         ) : (
-          <div>Press enter to stop recording</div>
+          <div>
+            <div>Press enter to stop recording</div>
+            <img
+              alt="cool loadering thing"
+              src={rings}
+              style={{
+                display: 'block',
+                margin: '0 auto',
+              }}
+            />
+          </div>
         )}
-        {lastRecording && <audio controls src={lastRecording} />}
       </div>
     )
   }

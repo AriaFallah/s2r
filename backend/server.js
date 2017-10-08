@@ -42,12 +42,18 @@ app.post('/speech2text', async (req: $Request, res: $Response) => {
 
     const translation = sikNLPBruh(
       response.results
-        .map(r => r.alternatives.map(a => a.transcript).reduce((p, c) => p + c))
-        .reduce((p, c) => p + c),
+        .map(r =>
+          r.alternatives
+            .filter(a => a.confidence >= 0.75)
+            .map(a => a.transcript)
+            .reduce((p, c) => p + c, ''),
+        )
+        .reduce((p, c) => p + c, ''),
     )
 
     res.json({ translation })
   } catch (e) {
+    console.log(e)
     res.status(500).send()
   }
 })
@@ -57,8 +63,12 @@ app.listen(1337, () => {
 })
 
 function sikNLPBruh(input) {
-  return input
-    .split('with')[1]
+  const split = input.split('with')
+  if (split.length === 1) {
+    return []
+  }
+
+  return split[1]
     .trim()
     .split(',')
     .join('')
