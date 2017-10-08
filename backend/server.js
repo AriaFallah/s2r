@@ -68,11 +68,14 @@ function sikNLPBruh(input) {
     return []
   }
 
-  return split[1]
+  return split
+    .slice(1)
+    .join('')
+    .replace(/with\s/g, '')
+    .replace(/,/g, '')
+    .replace(/and\s/g, '')
+    .replace(/or\s/g, '')
+    .replace(/\s{2,}/g, ' ')
     .trim()
-    .split(',')
-    .join('')
-    .split('and ')
-    .join('')
     .split(' ')
 }

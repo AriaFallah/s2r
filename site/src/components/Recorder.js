@@ -90,7 +90,10 @@ class Recorder extends Component<Props, State> {
       body: blob,
     })
       .then(r => r.json())
-      .then(() => this.setState({ isLoading: false }))
+      .then(x => {
+        this.setState({ isLoading: false })
+        console.log(x)
+      })
   }
 
   render() {
