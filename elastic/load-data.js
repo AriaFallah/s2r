@@ -14,7 +14,7 @@ Promise.all([
   client.bulk(makeBody(recipe, 'recipe')),
   client.bulk(makeBody(product, 'product')),
 ])
-  .then(x => console.log('done'))
+  .then(() => console.log('done'))
   .catch(err => console.error(err))
 
 function makeBody(obj, index) {
