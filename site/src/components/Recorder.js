@@ -9,7 +9,6 @@ import rings from '../svg/rings.svg'
 type Props = {
   query: ?string,
   updateData: *,
-  updateQuery: *,
   updateSpices: *,
 }
 
@@ -18,6 +17,14 @@ type State = {
   isLoading: boolean,
   isRecording: boolean,
   recorder: ?window.MediaRecorder,
+}
+
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response
+  }
+
+  return new Promise.reject(new Error(response.statusText))
 }
 
 class Recorder extends Component<Props, State> {
@@ -65,7 +72,6 @@ class Recorder extends Component<Props, State> {
     if (e.keyCode === 13) {
       if (!isRecording) {
         recorder.start()
-        this.props.updateQuery(null)
         this.setState({ isRecording: true })
       } else {
         recorder.stop()
@@ -75,21 +81,21 @@ class Recorder extends Component<Props, State> {
   }
 
   updateRecording = (blob: Blob) => {
-    console.log(window.URL.createObjectURL(blob))
     this.setState({ isLoading: true })
 
     fetch('http://localhost:1337/speech2text', {
       method: 'POST',
       body: blob,
     })
+      .then(checkStatus)
       .then(r => r.json())
       .then(r => {
         const { recipes, spices } = r
         this.setState({ isLoading: false })
         this.props.updateData(recipes)
         this.props.updateSpices(spices)
-        this.props.updateQuery(spices.join(', '))
       })
+      .catch(err => console.log(err))
   }
 
   render() {
@@ -130,12 +136,7 @@ class Recorder extends Component<Props, State> {
     )
   }
 }
-export default connect(
-  Recorder,
-  state => ({ query: state.query }),
-  dispatch => ({
-    updateData: d => dispatch({ type: 'UPDATE_DATA', payload: d }),
-    updateSpices: s => dispatch({ type: 'UPDATE_SPICES', payload: s }),
-    updateQuery: q => dispatch({ type: 'UPDATE_QUERY', payload: q }),
-  }),
-)
+export default connect(Recorder, null, dispatch => ({
+  updateData: d => dispatch({ type: 'UPDATE_DATA', payload: d }),
+  updateSpices: s => dispatch({ type: 'UPDATE_SPICES', payload: s }),
+}))

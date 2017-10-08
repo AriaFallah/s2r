@@ -131,7 +131,7 @@ function sanitize(arr, ingredients) {
           ing.includes(spice + ' ') ||
           ing === spice
         )
-      }),
+      })
     )
     .reduce((p, c) => p.concat(c), [])
     .join(', ')

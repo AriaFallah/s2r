@@ -41,6 +41,5 @@ class App extends Component<Props> {
 }
 
 export default connect(App, state => ({
-  query: state.query,
   recipes: state.data || [],
 }))
