@@ -12,29 +12,34 @@ app.use(morgan('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.post('/bluemix/text', async(req: $Request, res: $Response) => {
+app.post('/bluemix/text', async (req: $Request, res: $Response) => {
   const flacData: string = req.body.data
-  const auth: string = Buffer.from(`${bluemix.speech.user}:${bluemix.speech.password}`).toString('base64')
+  const auth: string = Buffer.from(
+    `${bluemix.speech.user}:${bluemix.speech.password}`,
+  ).toString('base64')
 
   const options: Object = {
     method: 'POST',
     headers: {
       Authorization: `Basic ${auth}`,
-      ...bluemix.speech.headers
+      ...bluemix.speech.headers,
     },
-    body: Buffer.from(flacData)
+    body: Buffer.from(flacData),
   }
   try {
-    const response = await fetch(bluemix.speech.url, options)
-                            .then(r => r.json())
+    const response = await fetch(bluemix.speech.url, options).then(r =>
+      r.json(),
+    )
 
-    response.results.alternatives.length > 0 ?
-      res.status(200).json({ translation: response.results.alternatives[0] })
-      :
-      res.status(404).json({ error: 'No resulting translation received.' })
+    response.results.alternatives.length > 0
+      ? res.status(200).json({ translation: response.results.alternatives[0] })
+      : res.status(404).json({ error: 'No resulting translation received.' })
   } catch (e) {
     console.log(`Error: ${e}`)
-    res.status(500).json({ error: 'There was an error with the data given to Bluemix Speech to Text service.' })
+    res.status(500).json({
+      error:
+        'There was an error with the data given to Bluemix Speech to Text service.',
+    })
   }
 })
 

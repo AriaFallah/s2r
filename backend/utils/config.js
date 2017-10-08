@@ -7,7 +7,7 @@ export const bluemix = {
     password: 'a60kHYJ20EYA',
     headers: {
       'Content-Type': 'audio/flac',
-      'Transfer-Encoding': 'chunked'
-    }
-  }
+      'Transfer-Encoding': 'chunked',
+    },
+  },
 }
