@@ -54,7 +54,7 @@ export default class Recipe extends Component<Props, State> {
 
           <div className="ui ordered list">
             {this.props.data.recipe_instructions.map(i => (
-              <span className="item">{i.slice(0, i.length - 2)}</span>
+	      <span className="item" key={"item" + i}>{i.slice(0, i.length - 2)}</span>
             ))}
           </div>
         </Modal>
