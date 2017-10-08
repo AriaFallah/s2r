@@ -18,6 +18,10 @@ h6 {
   font-family: 'Lato', sans-serif;
 }
 
+img {
+  display: block;
+}
+
 #root {
   align-items: center;
   display: flex;

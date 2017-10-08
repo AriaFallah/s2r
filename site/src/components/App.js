@@ -15,16 +15,18 @@ const Wrap = ({ children }) => children
 class App extends Component<Props> {
   render() {
     const { query, recipes } = this.props
+    console.log(query)
 
     return (
       <Wrap>
         <header>
           <h1 className="ui header">Speech To Recipes</h1>
+          <div style={{ textAlign: 'center' }}>
+            <Recorder />
+          </div>
         </header>
+        <div className="ui divider" />
         <main>
-          <Recorder />
-          {query != null && <span>Current Query: {query}</span>}
-          <div className="ui divider" />
           <div className="ui four column grid">
             {recipes.map(r => (
               <div key={r._id} className="column">
