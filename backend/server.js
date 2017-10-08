@@ -68,14 +68,11 @@ async function elastic(spices) {
     host: 'localhost:9200',
     log: 'trace'
   });
-  const conditions = []
-  for (var spice of spices) {
-    conditions.push({
-      "match" : {
-	"ingredients.ingredientName" : spice
-      }
-    })
-  }
+  const conditions = spices.map(spice => ({
+    "match" : {
+      "ingredients.ingredientName" : spice
+    }
+  }))
   const query = {
     query: {
       bool : {
