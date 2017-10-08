@@ -3,8 +3,9 @@
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import elasticsearch from 'elasticsearch'
-import fetch from 'node-fetch'
 import express from 'express'
+import fetch from 'node-fetch'
+import helmet from 'helmet'
 import morgan from 'morgan'
 
 const BLUEMIX = {
@@ -17,12 +18,13 @@ const MIME_TYPE = 'audio/webm'
 const app = express()
 app.use(bodyParser.raw({ type: MIME_TYPE, limit: '10mb' }))
 app.use(cors())
+app.use(helmet())
 app.use(morgan('dev'))
 
 app.post('/speech2text', async (req, res) => {
   const webmFile = req.body
   const auth: string = Buffer.from(
-    `${BLUEMIX.user}:${BLUEMIX.password}`,
+    `${BLUEMIX.user}:${BLUEMIX.password}`
   ).toString('base64')
 
   const options: Object = {
@@ -43,14 +45,14 @@ app.post('/speech2text', async (req, res) => {
     const translation = sikNLPBruh(
       response.results
         .map(r =>
-          r.alternatives.map(a => a.transcript).reduce((p, c) => p + c, ''),
+          r.alternatives.map(a => a.transcript).reduce((p, c) => p + c, '')
         )
-        .reduce((p, c) => p + c, ''),
+        .reduce((p, c) => p + c, '')
     )
 
     res.json({
       spices: translation,
-      recipes: translation.length == 0 ? [] : await elastic(translation),
+      recipes: translation.length === 0 ? [] : await elastic(translation),
     })
   } catch (e) {
     console.log(e)
@@ -81,7 +83,7 @@ function elastic(spices) {
         minimum_should_match: 1,
       },
     },
-    size: 12,
+    size: 20,
   }
 
   return client

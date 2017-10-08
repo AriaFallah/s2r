@@ -11,8 +11,8 @@ const recipe = JSON.parse(fs.readFileSync('./data/recipes.json', 'utf8'))
 const product = JSON.parse(fs.readFileSync('./data/products.json', 'utf8'))
 
 Promise.all([
-  client.bulk(makeBody(recipe, 'recipe')),
-  client.bulk(makeBody(product, 'product')),
+  client.bulk(makeBody(recipe, 'recipes')),
+  client.bulk(makeBody(product, 'products')),
 ])
   .then(() => console.log('done'))
   .catch(err => console.error(err))

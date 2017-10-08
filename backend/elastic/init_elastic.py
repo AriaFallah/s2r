@@ -2,8 +2,8 @@ import json
 import requests
 
 BASE_URL = 'http://localhost:9200/'
-PRODUCTS_FN = '../data/products.json'
-RECIPES_FN = '../data/recipes.json'
+PRODUCTS_FN = './data/products.json'
+RECIPES_FN = './data/recipes.json'
 
 
 def put_into_elastic(fn):
