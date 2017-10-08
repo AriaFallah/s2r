@@ -113,7 +113,7 @@ class Recorder extends Component<Props, State> {
       <div>
         {!isRecording ? (
           <div>
-            <div>Press enter to start searching</div>
+            <div>Press enter to start recording your query</div>
             {isLoading && (
               <img
                 alt="cool loadering thing"
@@ -127,7 +127,7 @@ class Recorder extends Component<Props, State> {
           </div>
         ) : (
           <div>
-            <div>Press enter to stop searching</div>
+            <div>Press enter again to stop recording your query</div>
             <img
               alt="cool loadering thing"
               src={rings}

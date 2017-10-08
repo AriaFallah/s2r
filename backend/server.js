@@ -65,7 +65,7 @@ app.listen(1337, () => {
 function elastic(spices) {
   const client = new elasticsearch.Client({
     host: 'localhost:9200',
-    log: 'trace',
+    log: 'error',
   })
 
   const conditions = spices.map(spice => ({
@@ -93,7 +93,7 @@ function elastic(spices) {
 }
 
 function sikNLPBruh(input) {
-  const split = input.split('with')
+  const split = input.split(/(?:with|for|using)\s/)
   if (split.length === 1) {
     return []
   }
@@ -101,7 +101,7 @@ function sikNLPBruh(input) {
   return split
     .slice(1)
     .join('')
-    .replace(/with\s/g, '')
+    .replace(/(?:with|for|using)\s/g, '')
     .replace(/,/g, '')
     .replace(/and\s/g, '')
     .replace(/or\s/g, '')

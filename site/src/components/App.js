@@ -18,17 +18,16 @@ class App extends Component<Props> {
 
     return (
       <Wrap>
-        <header>
+        <header style={{ paddingBottom: 25, textAlign: 'center' }}>
           <h1 className="ui header">Speech To Recipes</h1>
-          <div style={{ textAlign: 'center' }}>
-            <Recorder />
-          </div>
+          <Recorder />
+          {err ? (
+            <div className="ui blue message">
+              No results! Try repeating your query.
+            </div>
+          ) : null}
         </header>
-        <div className="ui divider" />
-        {err ? (
-          <div className="ui blue message">Please repeat your query.</div>
-        ) : null}
-        <main>
+        <main style={{ width: '100%' }}>
           <div className="ui four column grid">
             {recipes.map(r => (
               <div key={r._id} className="column">

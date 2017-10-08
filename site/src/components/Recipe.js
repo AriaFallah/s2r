@@ -101,6 +101,28 @@ class Recipe extends Component<Props, State> {
           <div className="ui divider" />
 
           <section>
+            <h4 className="ui header">Ingredients:</h4>
+            <ul className="ui list">
+              {data.ingredients.map((x, i) => (
+                <li className="item" key={i}>
+                  {[
+                    x.primQty,
+                    x.primUom.name,
+                    x.preText,
+                    x.ingredientName,
+                    x.postText,
+                  ]
+                    .filter(s => s)
+                    .map(s => s.replace(/&reg;/g, '®'))
+                    .join(' ')}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <div className="ui divider" />
+
+          <section>
             <h4 className="ui header">Directions:</h4>
             <ol className="ui list">
               {data.recipe_instructions.map((x, i) => (
@@ -135,5 +157,5 @@ function sanitize(arr, ingredients) {
     )
     .reduce((p, c) => p.concat(c), [])
     .join(', ')
-    .replace(/&reg/g, '®')
+    .replace(/&reg;/g, '®')
 }
