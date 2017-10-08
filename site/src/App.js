@@ -1,23 +1,24 @@
 // @flow
 
 import React, { Component } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import Recorder from './Recorder'
 
 type Props = {}
+
+const Wrap = ({ children }) => children
 
 class App extends Component<Props> {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Wrap>
+        <main className="main">
+          <header>
+            <h1>X</h1>
+          </header>
+          <Recorder />
+        </main>
+        <footer>Made By: Aria Fallah / Robert Adkins / Matt Callens</footer>
+      </Wrap>
     )
   }
 }

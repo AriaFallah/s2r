@@ -1,5 +1,50 @@
+body,
+html {
+  height: 100%;
+}
+
 body {
-  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0 auto;
   padding: 0;
-  font-family: sans-serif;
+  width: 700px;
+}
+
+@media (min-width: 300px) {
+  body {
+    width: 100%;
+  }
+}
+
+@media (min-width: 700px) {
+  body {
+    width: 700px;
+  }
+}
+
+@media (min-width: 900px) {
+  body {
+    width: 850px;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Lato', sans-serif;
+}
+
+#root {
+  height: 100%;
+}
+
+.main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
 }
