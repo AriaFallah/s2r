@@ -7,6 +7,9 @@ if __name__ == '__main__':
         exit(-1)
     text = argv[1]
     # here comes the magic
-    print(argv[1].split('with')[1].strip().replace(',', '').replace('and ', '').split(' '))
+    try:
+        print(argv[1].split('with')[1].strip().replace(',', '').replace('and ', '').split(' '))
+    except:
+        print('[]')
     
         
