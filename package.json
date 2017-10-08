@@ -1,8 +1,0 @@
-{
-  "name": "garbage",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/AriaFallah/garbage.git",
-  "license": "MIT",
-  "private": true
-}
