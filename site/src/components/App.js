@@ -6,6 +6,7 @@ import Recipe from './Recipe'
 import { connect } from '../redux'
 
 type Props = {
+  err: Boolean,
   query: ?string,
   recipes: Array<Object>,
 }
@@ -14,7 +15,7 @@ const Wrap = ({ children }) => children
 
 class App extends Component<Props> {
   render() {
-    const { query, recipes } = this.props
+    const { err, query, recipes } = this.props
     console.log(query)
 
     return (
@@ -26,6 +27,7 @@ class App extends Component<Props> {
           </div>
         </header>
         <div className="ui divider" />
+	{err ? <div className="ui blue message">Please repeat your query.</div> : null}
         <main>
           <div className="ui four column grid">
             {recipes.map(r => (
@@ -41,5 +43,6 @@ class App extends Component<Props> {
 }
 
 export default connect(App, state => ({
+  err: state.err,
   recipes: state.data || [],
 }))
