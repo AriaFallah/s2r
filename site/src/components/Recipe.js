@@ -36,7 +36,7 @@ class Recipe extends Component<Props, State> {
   }
 
   render() {
-    const { data } = this.props
+    const { data, spices } = this.props
     const { isModalOpen } = this.state
 
     return (
@@ -49,26 +49,7 @@ class Recipe extends Component<Props, State> {
           <div className="image">
             <img src={data.mobile_image} alt={data.id} />
           </div>
-          <span>
-            Matches:{' '}
-            {this.props.spices
-              .map(spice => spice.toLowerCase())
-              .map(spice =>
-                this.props.data.ingredients
-                  .map(ing => ing.ingredientName)
-                  .filter(ing => {
-                    ing = ing.toLowerCase()
-                    return (
-                      ing.includes(' ' + spice) ||
-                      ing.includes(spice + ' ') ||
-                      ing === spice
-                    )
-                  }),
-              )
-              .reduce((p, c) => p.concat(c), [])
-              .join(', ')
-              .replace(/&reg/g, '®')}
-          </span>
+          <span>Matches: {sanitize(spices, data.ingredients)}</span>
           <div className="content">
             <div className="header">{data.title}</div>
             <div className="meta">{data.servings} servings</div>
@@ -83,6 +64,7 @@ class Recipe extends Component<Props, State> {
           <div className="ui divider" />
           <img alt={data.id} src={data.desktop_image} style={{ width: 300 }} />
           <div className="ui divider" />
+          <h4 className="ui header">Directions:</h4>
           <ol className="ui list">
             {data.recipe_instructions.map((x, i) => (
               <li className="item" key={i}>
@@ -99,3 +81,21 @@ class Recipe extends Component<Props, State> {
 export default connect(Recipe, state => ({
   spices: state.spices ? state.spices : [],
 }))
+
+function sanitize(arr, ingredients) {
+  return arr
+    .map(spice => spice.toLowerCase())
+    .map(spice =>
+      ingredients.map(ing => ing.ingredientName).filter(ing => {
+        ing = ing.toLowerCase()
+        return (
+          ing.includes(' ' + spice) ||
+          ing.includes(spice + ' ') ||
+          ing === spice
+        )
+      }),
+    )
+    .reduce((p, c) => p.concat(c), [])
+    .join(', ')
+    .replace(/&reg/g, '®')
+}
