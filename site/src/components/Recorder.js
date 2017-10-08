@@ -7,7 +7,6 @@ import grid from '../svg/grid.svg'
 import rings from '../svg/rings.svg'
 
 type Props = {
-  query: ?string,
   updateError: *,
   updateData: *,
   updateSpices: *,
@@ -74,7 +73,7 @@ class Recorder extends Component<Props, State> {
       if (!isRecording) {
         recorder.start()
         this.setState({ isRecording: true })
-	this.props.updateError(false)
+        this.props.updateError(false)
       } else {
         recorder.stop()
         this.setState({ isRecording: false })
@@ -93,11 +92,11 @@ class Recorder extends Component<Props, State> {
       .then(r => r.json())
       .then(r => {
         const { recipes, spices } = r
-	if (recipes.length === 0) {
-	  this.props.updateError(true)
-	  this.setState({ isLoading: false})
-	  return
-	}
+        if (recipes.length === 0) {
+          this.props.updateError(true)
+          this.setState({ isLoading: false })
+          return
+        }
         this.setState({ isLoading: false })
         this.props.updateData(recipes)
         this.props.updateSpices(spices)
@@ -144,7 +143,7 @@ class Recorder extends Component<Props, State> {
   }
 }
 export default connect(Recorder, null, dispatch => ({
-  updateError: e => dispatch({ type: 'UPDATE_ERROR', payload: e}),
+  updateError: e => dispatch({ type: 'UPDATE_ERROR', payload: e }),
   updateData: d => dispatch({ type: 'UPDATE_DATA', payload: d }),
   updateSpices: s => dispatch({ type: 'UPDATE_SPICES', payload: s }),
 }))

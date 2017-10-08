@@ -7,7 +7,6 @@ import { connect } from '../redux'
 
 type Props = {
   err: boolean,
-  query: ?string,
   recipes: Array<Object>,
 }
 
@@ -15,8 +14,7 @@ const Wrap = ({ children }) => children
 
 class App extends Component<Props> {
   render() {
-    const { err, query, recipes } = this.props
-    console.log(query)
+    const { err, recipes } = this.props
 
     return (
       <Wrap>
