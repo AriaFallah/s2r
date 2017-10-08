@@ -5,7 +5,7 @@ import Column from './Column'
 import { connect } from '../redux'
 
 type Props = {
-  recipes: Array<Object>,
+  recipes: Array<Object>
 }
 
 class RecipeContainer extends Component<Props> {
@@ -37,5 +37,5 @@ class RecipeContainer extends Component<Props> {
 }
 
 export default connect(RecipeContainer, state => ({
-  recipes: state.data || [],
+  recipes: state.data || []
 }))

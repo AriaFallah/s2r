@@ -6,7 +6,7 @@ import RecipeContainer from './RecipeContainer'
 import { connect } from '../redux'
 
 type Props = {
-  query: ?string,
+  query: ?string
 }
 
 const Wrap = ({ children }) => children

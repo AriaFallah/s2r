@@ -45,6 +45,7 @@ h6 {
   justify-content: center;
 }
 
+<<<<<<< HEAD
 main {
   flex: 1 0 auto;
   margin: 20px 0;
@@ -53,4 +54,8 @@ main {
 footer {
   flex-shrink: 0;
   padding: 20px;
+=======
+.ui.card:hover {
+  cursor: pointer;
+>>>>>>> rough modal implementation
 }

@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import Recipe from './Recipe'
 
 type Props = {
-  designated: Array<Object>,
+  designated: Array<Object>
 }
 
 export default class Column extends Component<Props> {
