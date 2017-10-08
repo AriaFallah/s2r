@@ -1,9 +1,8 @@
 // @flow
-// server.js
 
-import express, { type $Request, type $Response } from 'express'
 import bodyParser from 'body-parser'
 import fetch from 'node-fetch'
+import express, { type $Request, type $Response } from 'express'
 import morgan from 'morgan'
 import { bluemix } from './utils/config'
 
@@ -26,6 +25,7 @@ app.post('/bluemix/text', async (req: $Request, res: $Response) => {
     },
     body: Buffer.from(flacData),
   }
+
   try {
     const response = await fetch(bluemix.speech.url, options).then(r =>
       r.json(),
