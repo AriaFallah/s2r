@@ -86,7 +86,7 @@ function elastic(spices) {
 
   return client
     .search({
-      index: 'recipe',
+      index: 'recipes',
       body: query,
     })
     .then(body => body.hits.hits)
