@@ -5,10 +5,12 @@ import { connect as c } from 'react-redux'
 
 export type Action =
   | { type: 'UPDATE_QUERY', payload: ?string }
+  | { type: 'UPDATE_SPICES', payload: ?Array<string> }
   | { type: 'UPDATE_DATA', payload: ?Array<Object> }
 
 export type AppState = {
   data: ?Array<Object>,
+  spices: ?Array<string>,
   query: ?string,
 }
 
@@ -16,6 +18,7 @@ export type Dispatch = (a: Action) => void
 
 const startState: AppState = {
   data: null,
+  spices: null,
   query: null,
 }
 
@@ -23,6 +26,8 @@ function rootReducer(state: AppState = startState, action: Action): AppState {
   switch (action.type) {
     case 'UPDATE_QUERY':
       return { ...state, query: action.payload }
+    case 'UPDATE_SPICES':
+      return { ...state, spices: action.payload }
     case 'UPDATE_DATA':
       return { ...state, data: action.payload }
     default:

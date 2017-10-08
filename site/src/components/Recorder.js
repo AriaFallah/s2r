@@ -86,6 +86,7 @@ class Recorder extends Component<Props, State> {
         const { recipes, spices } = r
         this.setState({ isLoading: false })
         this.props.updateData(recipes)
+        this.props.updateSpices(spices)
         this.props.updateQuery(spices.join(', '))
       })
   }
@@ -133,6 +134,7 @@ export default connect(
   state => ({ query: state.query }),
   dispatch => ({
     updateData: d => dispatch({ type: 'UPDATE_DATA', payload: d }),
+    updateSpices: s => dispatch({ type: 'UPDATE_SPICES', payload: s}),
     updateQuery: q => dispatch({ type: 'UPDATE_QUERY', payload: q }),
   }),
 )

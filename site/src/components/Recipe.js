@@ -2,16 +2,18 @@
 
 import React, { Component } from 'react'
 import Modal from 'react-modal'
+import { connect } from '../redux'
 
 type Props = {
   data: Object,
+  spices: Array<string>,
 }
 
 type State = {
   opened: boolean,
 }
 
-export default class Recipe extends Component<Props, State> {
+class Recipe extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
 
@@ -33,6 +35,19 @@ export default class Recipe extends Component<Props, State> {
       <div className="ui card" onClick={this.expand}>
         <div className="image">
           <img src={this.props.data.mobile_image} alt={this.props.data.id} />
+        </div>
+	<div className="meta">
+	<span>Matches: {
+	  this.props.spices.map(spice => spice.toLowerCase()).map(
+	    spice => this.props.data.ingredients.map(ing => ing.ingredientName).filter(
+	      ing => {
+		ing = ing.toLowerCase()
+ 		return ing.includes(' ' + spice) || ing.includes(spice + ' ') || ing === spice
+	      }
+	    )
+	  ).reduce((p, c) => p.concat(c), []).join(', ')
+	}
+        </span>
         </div>
         <div className="content">
           <div className="header">{this.props.data.title}</div>
@@ -62,3 +77,5 @@ export default class Recipe extends Component<Props, State> {
     )
   }
 }
+
+export default connect(Recipe, state => ({ spices: state.spices ? state.spices : []}))
